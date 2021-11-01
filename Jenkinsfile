@@ -1,11 +1,11 @@
 pipeline {
 	agent any
-	environment {
-		PROJECT_ID = 'leafy-market-327511'
-                CLUSTER_NAME = 'devops'
-                LOCATION = 'us-central1-c'
-                CREDENTIALS_ID = 'Kubernetes'		
-	}
+	//environment {
+		//PROJECT_ID = 'leafy-market-327511'
+               // CLUSTER_NAME = 'devops'
+                //LOCATION = 'us-central1-c'
+                //CREDENTIALS_ID = 'Kubernetes'		
+	//}
 	//{ label 'master' }
 	
 	//environment {
@@ -72,19 +72,19 @@ pipeline {
 		}
 	     }
 	}//end of Docker Push	
-	stage('Deploy to GKE K8s') {
-		    steps{
-			script {
-			    echo "Deployment started ..."
-			    sh 'ls -ltr'
-			    sh 'pwd'
-			    sh "sed -i 's/tagversion/${env.BUILD_NUMBER}/g' serviceLB.yaml"
-			    echo "Start deployment of serviceLB.yaml"
-			    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'serviceLB.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
-			    echo "Deployment Finished ..."
-		       }
-	            }
-		}//closed Deploy to GKE K8
+	//stage('Deploy to GKE K8s') {
+		    //steps{
+			//script {
+			   // echo "Deployment started ..."
+			    //sh 'ls -ltr'
+			   // sh 'pwd'
+			    //sh "sed -i 's/tagversion/${env.BUILD_NUMBER}/g' serviceLB.yaml"
+			    //echo "Start deployment of serviceLB.yaml"
+			    //step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'serviceLB.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+			    //echo "Deployment Finished ..."
+		       //}
+	           // }
+		//}//closed Deploy to GKE K8
 		
 		
 		//stage('Ansible') {
