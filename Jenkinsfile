@@ -38,17 +38,17 @@ pipeline {
 			}
 		}//end of sonar
 		
-		stage("Sonar Quality gate") {
-			steps {
-				script {
+		//stage("Sonar Quality gate") {
+			//steps {
+				//script {
 				//waitForQualityGate abortPipeline: true
-				def qualitygate = waitForQualityGate()
-      				if (qualitygate.status != "OK") {
-         			error "Pipeline aborted due to quality gate failure: ${qualitygate.status}"
-				}
-			   }//end of script
-			}
-		}//end of Sonar Quality gate
+				//def qualitygate = waitForQualityGate()
+      				//if (qualitygate.status != "OK") {
+         			//error "Pipeline aborted due to quality gate failure: ${qualitygate.status}"
+				//}
+			  // }//end of script
+			//}
+		//}//end of Sonar Quality gate
 		
 		stage('Push Package') {
 			steps {
@@ -56,22 +56,22 @@ pipeline {
 			}
 		}//end push packages
 		
-		stage('Docker Build') {
-	    steps {
-		withDockerRegistry([ credentialsId: "Artifactirytraining", url: "https://trainingdevopscicd.jfrog.io/" ]) {
-		sh 'docker build -t "devops:${BUILD_NUMBER}" .'
-		sh 'docker tag "devops:${BUILD_NUMBER}" trainingdevopscicd.jfrog.io/default-docker-local/"devops:${BUILD_NUMBER}"'
-		}
-	    }
-	}//end of Docker Build
+		//stage('Docker Build') {
+	    //steps {
+		//withDockerRegistry([ credentialsId: "Artifactirytraining", url: "https://trainingdevopscicd.jfrog.io/" ]) {
+		//sh 'docker build -t "devops:${BUILD_NUMBER}" .'
+		//sh 'docker tag "devops:${BUILD_NUMBER}" trainingdevopscicd.jfrog.io/default-docker-local/"devops:${BUILD_NUMBER}"'
+		//}
+	    //}
+	//}//end of Docker Build
 	    
-	stage('Docker Push') {
-	    steps {
-		withDockerRegistry([ credentialsId: "Artifactirytraining", url: "https://trainingdevopscicd.jfrog.io/" ]) {
-		sh 'docker push trainingdevopscicd.jfrog.io/default-docker-local/"devops:${BUILD_NUMBER}"'
-		}
-	     }
-	}//end of Docker Push	
+	//stage('Docker Push') {
+	    //steps {
+		//withDockerRegistry([ credentialsId: "Artifactirytraining", url: "https://trainingdevopscicd.jfrog.io/" ]) {
+		//sh 'docker push trainingdevopscicd.jfrog.io/default-docker-local/"devops:${BUILD_NUMBER}"'
+		//}
+	     //}
+	//}//end of Docker Push	
 	//stage('Deploy to GKE K8s') {
 		    //steps{
 			//script {
