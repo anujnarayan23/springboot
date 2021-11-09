@@ -92,7 +92,7 @@ pipeline {
 				sh '''
 				cd ansible
 				export ANSIBLE_HOST_KEY_CHECKING=False
-				ansible-playbook -i inventories/hosts -l linux deploy-package.yml  -e ansible_user=$vm_creds_USR -e ansible_password=$vm_creds_PSW
+				ansible-playbook -i inventories/hosts -l nonprod deploy-package.yml  -e ansible_user=$vm_creds_USR -e ansible_password=$vm_creds_PSW
 				'''
 			}
 		}//end of ansible
