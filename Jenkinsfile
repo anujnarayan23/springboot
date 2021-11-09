@@ -1,21 +1,21 @@
 pipeline {
-	agent any
+	
 	//environment {
 		//PROJECT_ID = 'leafy-market-327511'
                // CLUSTER_NAME = 'devops'
                 //LOCATION = 'us-central1-c'
                 //CREDENTIALS_ID = 'Kubernetes'		
 	//}
-	//{ label 'master' }
+	agent { label 'master' }
 	
 	environment {
 		vm_creds = credentials('vagrant')
 	}
 	
-	//tools {
-    	  // maven '3.6.3'
-	  // jdk '1.8'
-	//}
+	tools {
+    	   maven '3.6.3'
+	   jdk '1.8'
+	}
 	stages {
 		stage('Build') {
 			steps {
