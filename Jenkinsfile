@@ -8,9 +8,9 @@ pipeline {
 	//}
 	//{ label 'master' }
 	
-	//environment {
-	//	vm_creds = credentials('vagrant')
-	//}
+	environment {
+		vm_creds = credentials('vagrant')
+	}
 	
 	//tools {
     	  // maven '3.6.3'
@@ -87,15 +87,15 @@ pipeline {
 		//}//closed Deploy to GKE K8
 		
 		
-		//stage('Ansible') {
-		//	steps {
-		//		sh '''
-		//		cd ansible
-		//		export ANSIBLE_HOST_KEY_CHECKING=False
-		//		ansible-playbook -i inventories/hosts -l linux deploy-package.yml  -e ansible_user=$vm_creds_USR -e ansible_password=$vm_creds_PSW
-		//		'''
-		//	}
-		//}//end of ansible
+		stage('Ansible') {
+			steps {
+				sh '''
+				cd ansible
+				export ANSIBLE_HOST_KEY_CHECKING=False
+				ansible-playbook -i inventories/hosts -l linux deploy-package.yml  -e ansible_user=$vm_creds_USR -e ansible_password=$vm_creds_PSW
+				'''
+			}
+		}//end of ansible
 	
 	}//end stages
 }//end pipeline
