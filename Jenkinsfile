@@ -6,7 +6,8 @@ pipeline {
                 //LOCATION = 'us-central1-c'
                 //CREDENTIALS_ID = 'Kubernetes'		
 	//}
-	agent { label 'master' }
+	agent any
+	//{ label 'master' }
 	
 	environment {
 		vm_creds = credentials('vagrant')
