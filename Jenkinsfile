@@ -51,11 +51,11 @@ pipeline {
 			//}
 		//}//end of Sonar Quality gate
 		
-		//stage('Push Package') {
-			//steps {
-				//sh 'mvn deploy -s settings.xml'
-			//}
-		//}//end push packages
+		stage('Push Package') {
+			steps {
+				sh 'mvn deploy -s settings.xml'
+			}
+		}//end push packages
 		
 		stage('Docker Build') {
 	    steps {
