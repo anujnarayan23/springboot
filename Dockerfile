@@ -4,6 +4,4 @@ VOLUME /tmp
 ARG JAR_FILE
 ADD target/spring-rest-hello-world-1.0.jar app.jar
 
-#ENV JAR_OPTS=""
-#ENV JAVA_OPTS=""
 ENTRYPOINT exec java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
