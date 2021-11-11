@@ -73,6 +73,17 @@ pipeline {
 		}
 	     }
 	}//end of Docker Push	
+		stage('DeployToProduction') {
+            steps {
+                input 'Deploy to Production?'
+                milestone(1)
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'serviceLB.yaml',
+                    enableConfigSubstitution: true
+                )
+	    }
+	}//end of kubeconfig
 	//stage('Deploy to GKE K8s') {
 		    //steps{
 			//script {
