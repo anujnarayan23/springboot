@@ -20,7 +20,7 @@ spec:
    - name: myapp
      image: trainingdevopscicd.jfrog.io/default-docker-local/devops:${BUILD_NUMBER}
      ports:
-     - containerPort: 1213
+     - containerPort: 31208
    imagePullSecrets:
      - name: devops  
 
@@ -36,5 +36,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      nodePort: 1213
+      nodePort: 31208
       
