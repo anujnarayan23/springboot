@@ -18,7 +18,7 @@ spec:
   spec:
    containers:
    - name: myapp
-     image: trainingdevopscicd.jfrog.io/default-docker-local/devops:tagversion
+     image: trainingdevopscicd.jfrog.io/default-docker-local/devops:${BUILD_NUMBER}
      ports:
      - containerPort: 1213
    imagePullSecrets:
