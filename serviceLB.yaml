@@ -30,11 +30,11 @@ kind: Service
 metadata:
   name: myapp-service
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: myapp
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 1213
+      nodePort: 1213
       
