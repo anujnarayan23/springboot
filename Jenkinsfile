@@ -75,8 +75,8 @@ pipeline {
 	}//end of Docker Push	
 	stage('DeployTokubernetes') {
             steps {
-                input 'Deploy to Kubernetes?'
-                milestone(1)
+                //input 'Deploy to Kubernetes?'
+                //milestone(1)
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'serviceLB.yaml',
