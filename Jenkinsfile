@@ -31,31 +31,31 @@ pipeline {
 			}
 		}//end of test
 		
-		stage('Sonar Analysis') {
-			steps {
-				withSonarQubeEnv('SonarQube') {
-					sh 'mvn sonar:sonar' 
-				}
-			}
-		}//end of sonar
+		//stage('Sonar Analysis') {
+			//steps {
+				//withSonarQubeEnv('SonarQube') {
+					//sh 'mvn sonar:sonar' 
+				//}
+			//}
+		//}//end of sonar
 		
-		stage("Sonar Quality gate") {
-			steps {
-				script {
-				waitForQualityGate abortPipeline: true
-				def qualitygate = waitForQualityGate()
-      				if (qualitygate.status != "OK") {
-         			error "Pipeline aborted due to quality gate failure: ${qualitygate.status}"
-				}
-			   }//end of script
-			}
-		}//end of Sonar Quality gate
+		//stage("Sonar Quality gate") {
+			//steps {
+				//script {
+				//waitForQualityGate abortPipeline: true
+				//def qualitygate = waitForQualityGate()
+      				//if (qualitygate.status != "OK") {
+         			//error "Pipeline aborted due to quality gate failure: ${qualitygate.status}"
+				//}
+			   //}//end of script
+			//}
+		//}//end of Sonar Quality gate
 		
-		stage('Push Package') {
-			steps {
-				sh 'mvn deploy -s settings.xml'
-			}
-		}//end push packages
+		//stage('Push Package') {
+			//steps {
+				//sh 'mvn deploy -s settings.xml'
+			//}
+		//}//end push packages
 		
 		stage('Docker Build') {
 	    steps {
@@ -73,17 +73,17 @@ pipeline {
 		}
 	     }
 	}//end of Docker Push	
-	//stage('DeployToProduction') {
-            //steps {
-                //input 'Deploy to Production?'
-                //milestone(1)
-                //kubernetesDeploy(
-                    //kubeconfigId: 'kubeconfig',
-                   // configs: 'serviceLB.yaml',
-                    //enableConfigSubstitution: true
-                //)
-	    //}
-	//}//end of kubeconfig
+	stage('DeployTokubernetes') {
+            steps {
+                input 'Deploy to Kubernetes?'
+                milestone(1)
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'serviceLB.yaml',
+                    enableConfigSubstitution: true
+                )
+	    }
+	}//end of kubeconfig
 	//stage('Deploy to GKE K8s') {
 		    //steps{
 			//script {
