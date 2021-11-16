@@ -5,7 +5,7 @@ pipeline {
                 CLUSTER_NAME = 'devops'
                 LOCATION = 'us-central1-c'
                 CREDENTIALS_ID = 'Kubernetes'		
-	//}
+	}
 	
 	//{ label 'master' }
 	
