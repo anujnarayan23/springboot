@@ -31,25 +31,25 @@ pipeline {
 			}
 		}//end of test
 		
-		stage('Sonar Analysis') {
-			steps {
-				withSonarQubeEnv('SonarQube') {
-					sh 'mvn sonar:sonar' 
-				}
-			}
-		}//end of sonar
+		//stage('Sonar Analysis') {
+			//steps {
+				//withSonarQubeEnv('SonarQube') {
+					//sh 'mvn sonar:sonar' 
+				//}
+			//}
+		//}//end of sonar
 		
-		stage("Sonar Quality gate") {
-			steps {
-				script {
-				waitForQualityGate abortPipeline: true
-				def qualitygate = waitForQualityGate()
-      				if (qualitygate.status != "OK") {
-         			error "Pipeline aborted due to quality gate failure: ${qualitygate.status}"
-				}
-			   }//end of script
-			}
-		}//end of Sonar Quality gate
+		//stage("Sonar Quality gate") {
+			//steps {
+				//script {
+				//waitForQualityGate abortPipeline: true
+				//def qualitygate = waitForQualityGate()
+      				//if (qualitygate.status != "OK") {
+         			//error "Pipeline aborted due to quality gate failure: ${qualitygate.status}"
+				//}
+			  // }//end of script
+			//}
+		//}//end of Sonar Quality gate
 		
 		stage('Push Package') {
 			steps {
