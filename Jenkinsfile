@@ -1,10 +1,10 @@
 pipeline {
 	
-	//environment {
-		//PROJECT_ID = 'leafy-market-327511'
-               // CLUSTER_NAME = 'devops'
-                //LOCATION = 'us-central1-c'
-                //CREDENTIALS_ID = 'Kubernetes'		
+	environment {
+		PROJECT_ID = 'leafy-market-327511'
+                CLUSTER_NAME = 'devops'
+                LOCATION = 'us-central1-c'
+                CREDENTIALS_ID = 'Kubernetes'		
 	//}
 	agent any
 	//{ label 'master' }
@@ -31,31 +31,31 @@ pipeline {
 			}
 		}//end of test
 		
-		//stage('Sonar Analysis') {
-			//steps {
-				//withSonarQubeEnv('SonarQube') {
-					//sh 'mvn sonar:sonar' 
-				//}
-			//}
-		//}//end of sonar
+		stage('Sonar Analysis') {
+			steps {
+				withSonarQubeEnv('SonarQube') {
+					sh 'mvn sonar:sonar' 
+				}
+			}
+		}//end of sonar
 		
-		//stage("Sonar Quality gate") {
-			//steps {
-				//script {
-				//waitForQualityGate abortPipeline: true
-				//def qualitygate = waitForQualityGate()
-      				//if (qualitygate.status != "OK") {
-         			//error "Pipeline aborted due to quality gate failure: ${qualitygate.status}"
-				//}
-			   //}//end of script
-			//}
-		//}//end of Sonar Quality gate
+		stage("Sonar Quality gate") {
+			steps {
+				script {
+				waitForQualityGate abortPipeline: true
+				def qualitygate = waitForQualityGate()
+      				if (qualitygate.status != "OK") {
+         			error "Pipeline aborted due to quality gate failure: ${qualitygate.status}"
+				}
+			   }//end of script
+			}
+		}//end of Sonar Quality gate
 		
-		//stage('Push Package') {
-			//steps {
-				//sh 'mvn deploy -s settings.xml'
-			//}
-		//}//end push packages
+		stage('Push Package') {
+			steps {
+				sh 'mvn deploy -s settings.xml'
+			}
+		}//end push packages
 		
 		stage('Docker Build') {
 	    steps {
@@ -73,30 +73,30 @@ pipeline {
 		}
 	     }
 	}//end of Docker Push	
-	stage('DeployTokubernetes') {
-            steps {
+	//stage('DeployTokubernetes') {
+            //steps {
                 //input 'Deploy to Kubernetes?'
                 //milestone(1)
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'serviceLB.yaml',
-                    enableConfigSubstitution: true
-                )
-	    }
+                //kubernetesDeploy(
+                    //kubeconfigId: 'kubeconfig',
+                    //configs: 'serviceLB.yaml',
+                   // enableConfigSubstitution: true
+                //)
+	    //}
 	}//end of kubeconfig
-	//stage('Deploy to GKE K8s') {
-		    //steps{
-			//script {
-			   // echo "Deployment started ..."
-			    //sh 'ls -ltr'
-			   // sh 'pwd'
-			    //sh "sed -i 's/tagversion/${env.BUILD_NUMBER}/g' serviceLB.yaml"
-			    //echo "Start deployment of serviceLB.yaml"
-			    //step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'serviceLB.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
-			    //echo "Deployment Finished ..."
-		       //}
-	           // }
-		//}//closed Deploy to GKE K8
+	stage('Deploy to GKE K8s') {
+		    steps{
+			script {
+			    echo "Deployment started ..."
+			    sh 'ls -ltr'
+			    sh 'pwd'
+			    sh "sed -i 's/tagversion/${env.BUILD_NUMBER}/g' serviceLB.yaml"
+			    echo "Start deployment of serviceLB.yaml"
+			    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'serviceLB.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+			    echo "Deployment Finished ..."
+		       }
+	            }
+		}//closed Deploy to GKE K8
 		
 		
 		//stage('Ansible') {
