@@ -83,7 +83,7 @@ pipeline {
                    // enableConfigSubstitution: true
                 //)
 	    //}
-	}//end of kubeconfig
+	//}//end of kubeconfig
 	stage('Deploy to GKE K8s') {
 		    steps{
 			script {
